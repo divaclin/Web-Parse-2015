@@ -39,7 +39,7 @@
   </div>
 
   <script type="text/javascript">
-    Parse.initialize("APPLICATION_ID", "JAVASCRIPT_KEY");
+    Parse.initialize("1HTuCvw5oTUDbnyw3hfiw4gGImsVognwKbwmlIbo", "0bufSRt1H3cGSCzgud3a9KadZndVS07cAzowIDE7");
     
     var TestObject = Parse.Object.extend("TestObject");
     var testObject = new TestObject();
@@ -51,6 +51,29 @@
         $(".error").show();
       }
     });
+
+
+
+    // Step 1 : 建造一筆課程
+    var Course = Parse.Object.extend("Course") ;
+    var course = new Course();
+
+    course.set("name","course1");
+    course.set("time","三EFG") ;
+    course.save(null,{
+      success : function(course){
+        console.log(course);
+        alert("course save successfully!");
+      },
+      error : function(course,error){
+        console.log(error) ;
+        alert(error.message);
+      }
+    })
+
+
+
+
   </script>
 </body>
 
