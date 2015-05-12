@@ -48,6 +48,7 @@
       success: function(CourseArray) {
         console.log(CourseArray);
 
+        // Step 3 : 顯示課程資料
         for (var i = 0 ; i < CourseArray.length ; i++){
           course = CourseArray[i] ;
           View.addRow(course.get('name'),course.get('time'),course.get('credit'))
