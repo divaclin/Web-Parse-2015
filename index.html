@@ -14,7 +14,8 @@
 <body>
   
   <div id="main">
-    Step 1 : 建造一筆課程  
+    Step 1 : 建造一筆課程  <br>
+    Step 2 : 抓取所有課程
   </div>
 
   <script type="text/javascript">
@@ -23,26 +24,36 @@
 
     // Step 1 : 建造一筆課程
     var Course = Parse.Object.extend("Course") ;
-    var course1 = new Course();
+    // var course1 = new Course();
 
-    course.set("name","course1");
-    course.set("time","ㄧEFG");
-    course.set("credit",3);           // 也可以儲存數字
+    // course.set("name","course1");
+    // course.set("time","ㄧEFG");
+    // course.set("credit",3);           // 也可以儲存數字
 
-    course.save(null,{
-      success : function(course){     // 儲存成功後會執行的 callback
-        console.log(course);
-        alert("course save successfully!");
+    // course.save(null,{
+    //   success : function(course){     // 儲存成功後會執行的 callback
+    //     console.log(course);
+    //     alert("course save successfully!");
+    //   },
+    //   error : function(course,error){ // 儲存失敗後會執行的 callback
+    //     console.log(error) ;
+    //     alert(error.message);
+    //   }
+    // })
+
+    // Step 2 : 抓取所有課程
+    var allCourseQuery = new Parse.Query(Course)      // 創建 Course Query 
+
+    allCourseQuery.find({
+      success: function(CourseArray) {
+        console.log(CourseArray);
+        alert("Step2 done successfully\n看看你的 console 吧");
       },
-      error : function(course,error){ // 儲存失敗後會執行的 callback
+      error: function(error) {
         console.log(error) ;
         alert(error.message);
       }
-    })
-
-
-
-
+    });
     
 
 
