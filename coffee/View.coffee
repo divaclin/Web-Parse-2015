@@ -17,6 +17,7 @@ $ ->
                   <td>名稱</td>
                   <td>時間</td>
                   <td>學分數</td>
+                  <td class="favorite">最愛</td>
               </tr>
             </table>
           </div>
@@ -28,6 +29,12 @@ $ ->
           <td>#{name}</td>
           <td>#{time}</td>
           <td>#{credit}</td>
+          <td class="favorite"><span class="glyphicon glyphicon-star"></span></td>
         </tr>
         """
+
+    # user
+    showFavoriteBtn : ()->
+      $('.favorite').addClass('visible')
+
   window.View = new View()

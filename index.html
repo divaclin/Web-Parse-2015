@@ -12,11 +12,51 @@
 </head>
 
 <body>
+  <!-- // Step 4-1 加上 signup 跟 login  的 html 結構 -->
+  <div id="user">
+    <div class="container">
+      <div class="row">
+        <!-- // Step 4-1-1  signUp 的結構 -->
+        <form id="signUpForm" class="form-inline" role="form">
+          <div class="form-group">
+            <label for="signUpEmail">Sign Up Email</label>
+            <input type="email" class="form-control" id="signUpEmail" placeholder="Sign Up Email" required>
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="signUpPsd">Sign Up Password</label>
+            <input type="password" class="form-control" id="signUpPsd" placeholder="Sign Up Password">
+          </div>
+          <button type="submit" id="signUpBtn" class="btn btn-default">Sign Up</button>
+        </form>
+      </div>
+      <div class="row">
+        <!-- // Step 4-1-2  logIn 的結構 -->
+        <form  id="logInForm" class="form-inline" role="form">
+          <div class="form-group">
+            <label class="" for="logInEmail">Log In Email</label>
+            <input type="email" class="form-control" id="logInEmail" placeholder="Log  In Email">
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="logInPsd">Log In Password</label>
+            <input type="password" class="form-control" id="logInPsd" placeholder="Log  In Password">
+          </div>
+          <button type="submit" id="signUpBtn" class="btn btn-default">Log In</button>
+        </form>
+      </div>
+      <div class="row">
+        <!-- // Step 4-1-2  logIn 的結構 -->
+        <h2 id="currentUserName">
+        </h2>
+      </div>
+    </div>
+  </div>
 
   <div id="main">
     Step 1 : 建造一筆課程  <br>
     Step 2 : 抓取所有課程
   </div>
+
+
 
   <script type="text/javascript">
     Parse.initialize("1HTuCvw5oTUDbnyw3hfiw4gGImsVognwKbwmlIbo", "0bufSRt1H3cGSCzgud3a9KadZndVS07cAzowIDE7");
@@ -59,6 +99,35 @@
         alert(error.message);
       }
     });
+
+    // Step 4-2 : 讓使用者可以註冊
+
+    $(document).on('submit','#signUpForm',function(e){
+
+      var user = new Parse.User();
+      user.set("username", $('#signUpEmail').val());
+      user.set("email",    $('#signUpEmail').val());
+      user.set("password", $('#signUpPsd').val());
+
+      user.signUp(null,{              // username ,email , passwod 都要有
+        success : function(user){     // 註冊成功後會執行的 callback
+          console.log(user);
+          View.showFavoriteBtn();     // 註冊成功之後，開啟可以點選喜歡的系統
+          alert("使用者註冊成功");
+
+          // 注意一件事情，註冊之後，會自動當作使用者已經登入。
+        },
+        error : function(course,error){ // 註冊失敗後會執行的 callback
+          console.log(error) ;
+          alert(error.message);
+        }
+      });//endof signUp
+
+      return false     // 避免 form submit 完成 轉址
+
+    });  //endof  onSubmit
+
+
 
 
 

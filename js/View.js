@@ -20,11 +20,15 @@
       }
 
       View.prototype.init = function() {
-        return $main.html("<div class=\"container\">\n  <div class=\"row\">\n    <table id=\"table\" class=\"table table-striped\">\n      <tr>\n          <td>名稱</td>\n          <td>時間</td>\n          <td>學分數</td>\n      </tr>\n    </table>\n  </div>\n</div>");
+        return $main.html("<div class=\"container\">\n  <div class=\"row\">\n    <table id=\"table\" class=\"table table-striped\">\n      <tr>\n          <td>名稱</td>\n          <td>時間</td>\n          <td>學分數</td>\n          <td class=\"favorite\">最愛</td>\n      </tr>\n    </table>\n  </div>\n</div>");
       };
 
       View.prototype.addRow = function(name, time, credit) {
-        return $table.append("<tr>\n  <td>" + name + "</td>\n  <td>" + time + "</td>\n  <td>" + credit + "</td>\n</tr>");
+        return $table.append("<tr>\n  <td>" + name + "</td>\n  <td>" + time + "</td>\n  <td>" + credit + "</td>\n  <td class=\"favorite\"><span class=\"glyphicon glyphicon-star\"></span></td>\n</tr>");
+      };
+
+      View.prototype.showFavoriteBtn = function() {
+        return $('.favorite').addClass('visible');
       };
 
       return View;
