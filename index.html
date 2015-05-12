@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  
+
   <div id="main">
     Step 1 : 建造一筆課程  <br>
     Step 2 : 抓取所有課程
@@ -20,7 +20,7 @@
 
   <script type="text/javascript">
     Parse.initialize("1HTuCvw5oTUDbnyw3hfiw4gGImsVognwKbwmlIbo", "0bufSRt1H3cGSCzgud3a9KadZndVS07cAzowIDE7");
-    
+
 
     // Step 1 : 建造一筆課程
     var Course = Parse.Object.extend("Course") ;
@@ -42,19 +42,23 @@
     // })
 
     // Step 2 : 抓取所有課程
-    var allCourseQuery = new Parse.Query(Course)      // 創建 Course Query 
+    var allCourseQuery = new Parse.Query(Course)      // 創建 Course Query
 
     allCourseQuery.find({
       success: function(CourseArray) {
         console.log(CourseArray);
-        alert("Step2 done successfully\n看看你的 console 吧");
+
+        for (var i = 0 ; i < CourseArray.length ; i++){
+          course = CourseArray[i] ;
+          View.addRow(course.get('name'),course.get('time'),course.get('credit'))
+        }
       },
       error: function(error) {
         console.log(error) ;
         alert(error.message);
       }
     });
-    
+
 
 
 
