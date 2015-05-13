@@ -1,2 +1,2 @@
 //Parse.initialize
-Parse.initialize("1HTuCvw5oTUDbnyw3hfiw4gGImsVognwKbwmlIbo", "0bufSRt1H3cGSCzgud3a9KadZndVS07cAzowIDE7");
+Parse.initialize("rWs28klYrLhB4tv4gGv0CslHRNjD3yl8w5OeWb9p", "fWkZ39p2Z8Xmd7dBgvpK8VuvVl5wWOikGdHyJsBT");
