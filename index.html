@@ -101,7 +101,6 @@
     });
 
     // Step 4-2 : 讓使用者可以註冊
-
     $(document).on('submit','#signUpForm',function(e){
 
       var user = new Parse.User();
@@ -122,10 +121,41 @@
           alert(error.message);
         }
       });//endof signUp
+      e.preventDefault();  // 避免 form submit 完成後 轉址
+    });  //endof signUpBtn onSubmit
 
-      return false     // 避免 form submit 完成 轉址
 
-    });  //endof  onSubmit
+    // Step 5 : 讓使用者可以登入
+    $(document).on('submit','#logInForm',function(e){
+
+      var username = $('#logInEmail').val() ;
+      var password = $('#logInPsd').val() ;
+
+      // 用 Parse.User.current() 判定使用者是否是登入的狀態，這裏還沒登入，會是 null
+      console.log("登入之前的 Parse.User.current()  : ",Parse.User.current() ) ;
+
+      Parse.User.logIn( username , password , {
+        success: function(user) {
+          if (Parse.User.current()){ // 判定使用者是否是登入的狀態，這裏就登入了
+            console.log("登入之後的 Parse.User.current()  : ",Parse.User.current() ) ;
+          }
+
+          alert('登入成功') ;
+        },
+        error: function(user, error) {
+          console.log(error) ;
+          alert(error.message);
+        }
+      });//endof login
+      e.preventDefault();  // 避免 form submit 完成後 轉址
+    });  //endof logInBtn onSubmit
+
+    // Step 5-1 : 讓使用者可以登出
+    $( window ).unload(function() {   // Parse 完全不會自動登出喔，一定要呼叫登出才會登出
+      Parse.User.logOut();
+    }) ;
+
+
 
 
 
