@@ -176,17 +176,29 @@
     function prepareForLogIn(){
       View.showFavoriteBtn() ;
 
+
+
+      // Step 7 :  在一開始的時候顯示關聯資料
+
+
+
+
+
+
+
+      //////////// endof Step 7
       $(document).on('click','.favorite',function(e){  // 替最愛按鈕做監聽器
         $favoriteBtn = $(this).find('span') ;       // 抓取目前被按到的 .favorite 物件裡面的星星符號
         console.log ('onClick .favorite > span' , $favoriteBtn.hasClass('glyphicon-star-empty'));
         var courseID = $favoriteBtn.closest('tr').data('courseid') ; // 抓到他的資料容器，並抓取上面的 id 資料
 
 
+
         var course = new Course() ;       //
             course.id = courseID ;        // !!設定id來代表那個課程物件了！
         var user = Parse.User.current() ;
 
-        // Step 6-最重點2 : 創建 N對N 的關聯欄位！！
+        // Step 6-5最重點 : 創建 N對N 的關聯欄位！！
         // var Coursefans =  course.relation("fans_User");  // curse.relation 會自動建好一個欄位
         var Userfavor = user.relation("favor_Course");
 
@@ -217,8 +229,17 @@
           }
         }); // endof favoriteCourse.save()
       }); //endof .favorite on click event listenr
+
+
+
+
+
+
     } //endof prepareForLogIn function
 
+
+
+    // Step 7^ :  在一開始的時候顯示關聯資料
 
   </script>
 </body>
