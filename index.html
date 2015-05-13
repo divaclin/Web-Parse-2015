@@ -67,19 +67,19 @@
     var Course = Parse.Object.extend("Course") ;
     // var course1 = new Course();
 
-    // course.set("name","course1");
-    // course.set("time","ㄧEFG");
-    // course.set("credit",3);           // 也可以儲存數字
+    course.set("name","course1");
+    course.set("time","ㄧEFG");
+    course.set("credit",3);           // 也可以儲存數字
 
-    // course.save(null,{
-    //   success : function(course){     // 儲存成功後會執行的 callback
-    //     console.log(course);
-    //     alert("course save successfully!");
-    //   },
-    //   error : function(course,error){ // 儲存失敗後會執行的 callback
-    //     console.log(error) ;
-    //     alert(error.message);
-    //   }
+    course.save(null,{
+      success : function(course){     // 儲存成功後會執行的 callback
+        console.log(course);
+        alert("course save successfully!");
+      },
+      error : function(course,error){ // 儲存失敗後會執行的 callback
+        console.log(error) ;
+        alert(error.message);
+      }
     // })
 
     // Step 2 : 抓取所有課程

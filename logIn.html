@@ -9,15 +9,83 @@
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/css.css">
-  <script type="text/javascript" src="js/logIn.js"></script>
+  <script type="text/javascript" src="js/key.js"></script>
+  <script>
+
+  // Step 4 : 登入
+  $(document).on('submit','#logInForm',function(e){
+    e.preventDefault();  // 避免 form submit 完成後 轉址
+    console.log ("login") ;
+    var username = $('#username').val() ;
+    var password = $('#password').val() ;
+
+    // 用 Parse.User.current() 判定使用者是否是登入的狀態，這裏還沒登入，會是 null
+    console.log("登入之前的 Parse.User.current()  : ",Parse.User.current() ) ;
+
+    Parse.User.logIn( username , password , {
+      success: function(user) {
+        // 到 console 看看 Parse.User.current()  的東西
+        console.log("登入之後的 Parse.User.current()  : ",Parse.User.current() ) ;
+        alert('登入成功') ;
+        window.location = 'courseList.html' ;
+      },
+      error: function(user, error) {
+        console.log(error) ;
+        alert(error.message);
+      }
+    });//endof login
+  });  //endof logInBtn onSubmit
+  // end of login 
+
+
+
+  </script>
 </head>
 
 <body>
   <div class="container">
     <div class="row">
-      <h2>登入頁面</h2>
+      <form id="logInForm" class="form-horizontal">
+      <fieldset>
+
+      <!-- Form Name -->
+      <legend>登入</legend>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="username">使用者名稱</label>
+        <div class="col-md-4">
+        <input id="username" name="username" type="text" placeholder="username" class="form-control input-md" required="">
+
+        </div>
+      </div>
+
+      <!-- Password input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="password">使用者密碼</label>
+        <div class="col-md-4">
+          <input id="password" name="password" type="password" placeholder="password" class="form-control input-md" required="">
+
+        </div>
+      </div>
+
+
+      <!-- Button -->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="signUpBtn"></label>
+        <div class="col-md-4">
+          <button id="signUpBtn" name="signUpBtn" class="btn btn-primary">登入</button>
+          <a href="courseList.html" class="btn">前往 註冊頁面</a>
+        </div>
+      </div>
+
+      </fieldset>
+      </form>
+
+
     </div>
   </div>
+
 </body>
 
 </html>

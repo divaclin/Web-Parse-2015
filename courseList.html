@@ -1,0 +1,70 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+
+  <title>課程清單</title>
+  <meta name="description" content="My Parse App">
+  <meta name="viewport" content="width=device-width">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/css.css">
+  <script type="text/javascript" src="js/key.js"></script>
+  <script type="text/javascript" src="js/courseList.js"></script>
+  <script  type="text/javascript">
+
+
+  //### Step 2 : 抓取所有課程
+  $(document).ready(function(){
+    var Course = Parse.Object.extend("Course") ;
+    var allCourseQuery = new Parse.Query(Course)      // 創建 Course Query
+
+    // 完成以下部分
+    allCourseQuery.find({
+      success: function(CourseArray) {
+        console.log(CourseArray);
+
+        // Step 3 : 顯示課程資料
+        for (var i = 0 ; i < CourseArray.length ; i++){
+          course = CourseArray[i] ;
+          View.addRow(
+            course.id, // 加入 id 資料 進入 HTML，看看 View.addRow 做了麼修改
+            course.get('name'),
+            course.get('time'),
+            course.get('credit')
+          );
+        }
+      },
+      error: function(error) {
+        console.log(error) ;
+        alert(error.message);
+      }
+    });
+  });
+  // Step 2 end
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <h2>課程清單</h2>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <table id="table" class="table table-striped">
+        <tr>
+            <td>名稱</td>
+            <td>時間</td>
+            <td>學分數</td>
+            <td class="favorite">最愛</td>
+        </tr>
+      </table>
+    </div>
+    <div class="row">
+      <a href="addCourse.html" class="btn btn-success">前往 新增課程</a>
+      </div>
+</body>
+
+</html>

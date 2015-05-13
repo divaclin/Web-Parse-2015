@@ -9,15 +9,89 @@
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/css.css">
-  <script type="text/javascript" src="js/addCourse.js"></script>
+  <script type="text/javascript" src="js/key.js"></script>
+  <script type="text/javascript">
+  //### Step 1 建造一筆課程
+  $(document).on('submit','#addCourseForm',function(e){
+    e.preventDefault();
+    var Course = Parse.Object.extend("Course") ;
+    var course = new Course();
+    var name = $('#name').val();
+    var time = $('#time').val();
+    var num = parseInt($('#credit').val());
+    //-- 請參考助教完成以下程式碼
+    course.set("name",name);
+    course.set("time",time);
+    course.set("credit",num);           // 也可以儲存數字
+
+    course.save(null,{
+      success : function(course){     // 儲存成功後會執行的 callback
+        console.log(course);
+        alert("course save successfully!");
+      },
+      error : function(course,error){ // 儲存失敗後會執行的 callback
+        console.log(error) ;
+        alert(error.message);
+      }
+    });
+    //--
+    console.log('submit');
+  });
+  //### Step 1 end
+  </script>
 </head>
 
 <body>
   <div class="container">
     <div class="row">
-      <h2>課程清單</h2>
+      <form id="addCourseForm" class="form-horizontal">
+        <fieldset>
+
+        <!-- Form Name -->
+        <legend>新增課程</legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="name">課程名稱</label>
+          <div class="col-md-4">
+          <input id="name" name="name" type="text" placeholder="課程名稱" class="form-control input-md" required="">
+
+          </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="time">課程時間</label>
+          <div class="col-md-4">
+          <input id="time" name="time" type="text" placeholder="課程時間" class="form-control input-md" required="">
+
+          </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="credit">學分數</label>
+          <div class="col-md-4">
+          <input id="credit" name="credit" type="number" placeholder="學分數" class="form-control input-md" required="">
+
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="addCourseBtn"></label>
+          <div class="col-md-4">
+            <button id="addCourseBtn" type="submit" name="addCourseBtn" class="btn btn-primary">新增課程</button>
+            <a href="courseList.html" class="btn btn-success">前往 課程清單</a>
+          </div>
+          <div class="col-md-4">
+          </div>
+        </div>
+        </fieldset>
+      </form>
     </div>
   </div>
+
 </body>
 
 </html>
