@@ -91,7 +91,14 @@
         // Step 3 : 顯示課程資料
         for (var i = 0 ; i < CourseArray.length ; i++){
           course = CourseArray[i] ;
-          View.addRow(course.get('name'),course.get('time'),course.get('credit'))
+
+          // Step 6-4 : 把 id 資料放進 HTML 以便 Jquery 存取
+          View.addRow(
+            course.get('name'),
+            course.get('time'),
+            course.get('credit'),
+            course.id  // 加入 id 資料 進入 HTML，看看 View.addRow 做了麼修改
+          ) ;
         }
       },
       error: function(error) {
@@ -100,6 +107,7 @@
       }
     });
 
+    // Step 4-1 : 貼入助教的 Html 結構
     // Step 4-2 : 讓使用者可以註冊
     $(document).on('submit','#signUpForm',function(e){
 
@@ -111,7 +119,11 @@
       user.signUp(null,{              // username ,email , passwod 都要有
         success : function(user){     // 註冊成功後會執行的 callback
           console.log(user);
-          View.showFavoriteBtn();     // 註冊成功之後，開啟可以點選喜歡的系統
+
+          // Step 6-3 : 改成登入之後會呼叫的方程式
+          //View.showFavoriteBtn();     // 註冊成功之後，開啟可以點選喜歡的系統
+          prepareForLogIn();            // 不過在這裡，就改成別的方程了
+
           alert("使用者註冊成功");
 
           // 注意一件事情，註冊之後，會自動當作使用者已經登入。
@@ -136,11 +148,12 @@
 
       Parse.User.logIn( username , password , {
         success: function(user) {
-          if (Parse.User.current()){ // 判定使用者是否是登入的狀態，這裏就登入了
-            console.log("登入之後的 Parse.User.current()  : ",Parse.User.current() ) ;
-          }
 
+          // Step 6-2 加入登登入之後，要做的事情
+          prepareForLogIn() ;
+          console.log("登入之後的 Parse.User.current()  : ",Parse.User.current() ) ;
           alert('登入成功') ;
+
         },
         error: function(user, error) {
           console.log(error) ;
@@ -156,10 +169,55 @@
     }) ;
 
 
+    // step 6-1 : 製作使用者登入之後要做的方程式
+    // Step 6-2^: 回到 logIn  修改登入成功後要呼叫登入的功能
+    // Step 6-3^: 回到 signUp 修改註冊成功後要呼叫登入的功能
+    // Step 6-4^: 回到 Step 2 , 替每一筆加入的資料加入資料id
+    function prepareForLogIn(){
+      View.showFavoriteBtn() ;
+
+      $(document).on('click','.favorite',function(e){  // 替最愛按鈕做監聽器
+        $favoriteBtn = $(this).find('span') ;       // 抓取目前被按到的 .favorite 物件裡面的星星符號
+        console.log ('onClick .favorite > span' , $favoriteBtn.hasClass('glyphicon-star-empty'));
+        var courseID = $favoriteBtn.closest('tr').data('courseid') ; // 抓到他的資料容器，並抓取上面的 id 資料
 
 
+        var course = new Course() ;       //
+            course.id = courseID ;        // !!設定id來代表那個課程物件了！
+        var user = Parse.User.current() ;
 
+        // Step 6-最重點2 : 創建 N對N 的關聯欄位！！
+        // var Coursefans =  course.relation("fans_User");  // curse.relation 會自動建好一個欄位
+        var Userfavor = user.relation("favor_Course");
 
+        if ($favoriteBtn.hasClass('glyphicon-star-empty')){
+          Userfavor.add(course);             // user 與 course 關聯
+        }else{
+          Userfavor.remove(course);            // user 與 course 關聯
+        }
+
+        /// 如果是 1對1 跟 1對多  用以下程式碼
+        // user.set('favor_Course',course) 就可以了
+
+        user.save(null,{
+          success : function(user){     // 儲存成功後會執行的 callback
+            console.log(user);
+
+            if ($favoriteBtn.hasClass('glyphicon-star-empty')){
+              alert("Userfavor save successfully!");
+              View.toggleFavorite($favoriteBtn,true);
+            }else{
+              alert("Userfavor remove successfully!");
+              View.toggleFavorite($favoriteBtn,false);
+            }
+          },
+          error : function(user,error){ // 儲存失敗後會執行的 callback
+            console.log(error) ;
+            alert(error.message);
+          }
+        }); // endof favoriteCourse.save()
+      }); //endof .favorite on click event listenr
+    } //endof prepareForLogIn function
 
 
   </script>
