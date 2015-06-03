@@ -83,7 +83,7 @@
     // })
 
     // Step 2 : 抓取所有課程
-    var allCourseQuery = new Parse.Query(Course)      // 創建 Course Query
+	  var allCourseQuery = new Parse.Query(Course);      // 創建 Course Query
 
     allCourseQuery.find({
       success: function(CourseArray) {
